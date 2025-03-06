@@ -30,7 +30,17 @@ RUN conda install -c conda-forge -y jupyterlab==4.0.9 \
                                     dask-labextension==7.0.0 \
                                     dask-kubernetes==2023.9.0 \
                                     kr8s==0.8.16 \
-                                    root
+                                    root \
+                                    ipykernel \
+                                    umap-learn \
+                                    matplotlib \
+                                    numpy \ 
+                                    pandas \ 
+                                    scipy \
+                                    h5py \
+                                    plotly \
+                                    scikit-image
+
 
 #RUN conda config --set channel_priority strict
 #RUN conda install -c conda-forge root
