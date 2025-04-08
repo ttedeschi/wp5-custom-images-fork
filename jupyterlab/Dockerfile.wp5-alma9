@@ -80,11 +80,11 @@ RUN mkdir -p /.init \
 #    echo '{"@jupyterlab/apputils-extension:themes": {"theme":"Tailwind Light"}}'> ~/.jupyter/lab/settings/overrides.json
 
 #RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/9.0/htcondor-release-current.el9.noarch.rpm
-RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/10.x/htcondor-release-current.el9.noarch.rpm
+#RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/10.x/htcondor-release-current.el9.noarch.rpm
 
-RUN sed -i 's/current/8.9/g' /etc/yum.repos.d/htcondor.repo
+#RUN sed -i 's/current/8.9/g' /etc/yum.repos.d/htcondor.repo
 
-RUN yum install -y condor
+#RUN yum install -y condor
 
 RUN pip install setuptools==59.5.0 asyncssh
 #RUN pip install --upgrade pysqlite
