@@ -10,16 +10,21 @@ spec:
       ports:
       - name: tcp-comm
         port: 8786
+        nodePort: 31022
         protocol: TCP
-        targetPort: tcp-comm
-      - name: http-dashboard
-        port: 8787
-        protocol: TCP
-        targetPort: http-dashboard
+        #targetPort: tcp-comm
+        targetPort: 8786
+      #- name: http-dashboard
+      #  port: 8787
+      #  protocol: TCP
+      #  targetPort: http-dashboard
+      #selector:
+      #  dask.org/cluster-name: dask
+      #  dask.org/component: scheduler
       selector:
-        dask.org/cluster-name: dask
-        dask.org/component: scheduler
-      type: ClusterIP
+        app.kubernetes.io/name: ssh-fwd
+      #type: ClusterIP
+      type: NodePort
     spec:
       containers:
       - args:
@@ -56,6 +61,16 @@ spec:
           requests:
             cpu: "1"
             memory: 2Gi
+        volumeMounts:
+        - name: cvmfs
+          mountPath: /cvmfs
+      volumes:
+      - name: cvmfs
+        hostPath:
+          path: /cvmfs-af-htcondor
+          type: Directory
+      nodeSelector:
+        kubernetes.io/hostname: vk-test
             
   worker:
     replicas: 0
@@ -82,4 +97,15 @@ spec:
           requests:
             cpu: "1"
             memory: 2Gi
+        volumeMounts:
+        - name: cvmfs
+          mountPath: /cvmfs
+      volumes:
+      - name: cvmfs
+        hostPath:
+          path: /cvmfs-af-htcondor
+          type: Directory
+      nodeSelector:
+        kubernetes.io/hostname: vk-test
+
 
