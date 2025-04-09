@@ -40,7 +40,7 @@ spec:
           value: "USERNAME here"
         - name: TOKEN
           value: "TOKEN here"
-        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-5
+        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-6
         livenessProbe:
           httpGet:
             path: /health
@@ -97,7 +97,7 @@ spec:
         - --dashboard-address
         - "8788"
         env: []
-        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-5
+        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-6
         name: worker
         ports:
         - containerPort: 8788
