@@ -10,29 +10,37 @@ spec:
       ports:
       - name: tcp-comm
         port: 8786
-        nodePort: 31022
         protocol: TCP
-        #targetPort: tcp-comm
-        targetPort: 8786
-      #- name: http-dashboard
-      #  port: 8787
-      #  protocol: TCP
-      #  targetPort: http-dashboard
-      #selector:
-      #  dask.org/cluster-name: dask
-      #  dask.org/component: scheduler
+        targetPort: tcp-comm
+      - name: http-dashboard
+        port: 8787
+        protocol: TCP
+        targetPort: http-dashboard
       selector:
-        app.kubernetes.io/name: ssh-fwd
-      #type: ClusterIP
-      type: NodePort
+        dask.org/cluster-name: dask
+        dask.org/component: scheduler
+      type: ClusterIP
+      #ports:
+      #- name: tcp-comm
+      #  port: 8786
+      #  nodePort: 31022
+      #  protocol: TCP
+      #  targetPort: 8786
+      #selector:
+      #  app.kubernetes.io/name: ssh-fwd
+      #type: NodePort
     spec:
       containers:
       - args:
-        - dask-scheduler
-        - --host
-        - 0.0.0.0
-        env: []
-        image: ghcr.io/icsc-spoke2-repo/jlab:wp5-alma9-highrate-v0.1.0
+        - bash
+        - -c
+        - "'python3 /usr/local/bin/start_tunnel.py 8100 8101 & dask-scheduler --port 8100 --dashboard-address 8101'"
+        env: 
+        - name: USERNAME
+          value: "USERNAME here"
+        - name: TOKEN
+          value: "TOKEN here"
+        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-5
         livenessProbe:
           httpGet:
             path: /health
@@ -71,6 +79,11 @@ spec:
           type: Directory
       nodeSelector:
         kubernetes.io/hostname: vk-test
+      tolerations:
+      - key: virtual-node.interlink/no-schedule
+        operator: Exists
+      - key: virtual-kubelet.io/provider
+        operator: Exists
             
   worker:
     replicas: 0
@@ -84,7 +97,7 @@ spec:
         - --dashboard-address
         - "8788"
         env: []
-        image: ghcr.io/icsc-spoke2-repo/jlab:wp5-alma9-highrate-v0.1.0
+        image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-5
         name: worker
         ports:
         - containerPort: 8788
@@ -107,5 +120,9 @@ spec:
           type: Directory
       nodeSelector:
         kubernetes.io/hostname: vk-test
-
+      tolerations:
+      - key: virtual-node.interlink/no-schedule
+        operator: Exists
+      - key: virtual-kubelet.io/provider
+        operator: Exists
 
