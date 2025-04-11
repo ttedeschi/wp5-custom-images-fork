@@ -62,9 +62,6 @@ spec:
         - dask-worker
         - --name
         - $(DASK_WORKER_NAME)
-        - --dashboard
-        - --dashboard-address
-        - "8788"
         - --nthreads
         - "1"
         - --memory-limit
