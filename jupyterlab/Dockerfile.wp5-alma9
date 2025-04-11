@@ -39,7 +39,7 @@ RUN conda install -c conda-forge -y python=3.11.8 \
 #RUN conda install -c conda-forge root
 
 COPY labextension.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/labextension.yaml
-COPY DaskCluster.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/DaskCluster.yaml
+COPY DaskCluster.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/DaskCluster_template.yaml
 COPY refresh-manifest.py /opt/conda/lib/python3.11/site-packages/dask_labextension/refresh-manifest.py
 
 RUN sleep 0.1
