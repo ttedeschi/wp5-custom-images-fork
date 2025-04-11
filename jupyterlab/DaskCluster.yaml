@@ -9,17 +9,19 @@ spec:
     service:
       ports:
       - name: tcp-comm
-        port: 8786
+        port: 8912
         protocol: TCP
-        targetPort: tcp-comm
+        targetPort: 8912
+    #    targetPort: tcp-comm
       - name: http-dashboard
-        port: 8787
+        port: 8913
         protocol: TCP
-        targetPort: http-dashboard
+        targetPort: 8913
       selector:
-        dask.org/cluster-name: dask
-        dask.org/component: scheduler
-      type: ClusterIP
+         app.kubernetes.io/name: ssh-fwd
+    #    dask.org/cluster-name: 
+    #    dask.org/component: scheduler
+    #  type: ClusterIP
       #ports:
       #- name: tcp-comm
       #  port: 8786
@@ -34,34 +36,18 @@ spec:
       - args:
         - bash
         - -c
-        - "'python3 /usr/local/bin/start_tunnel.py 8100 8101 & dask-scheduler --port 8100 --dashboard-address 8101'"
+        - "'python3 /usr/local/bin/start_tunnel.py 8912 8913 & dask-scheduler --port 8912 --dashboard-address 8913'"
         env: 
         - name: USERNAME
-          value: "USERNAME here"
+          value: "YOUR USERNAME"
         - name: TOKEN
-          value: "TOKEN here"
+          value: "YOUR TOKEN"
         image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-6
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: http-dashboard
-          initialDelaySeconds: 15
-          periodSeconds: 20
         name: scheduler
-        ports:
-        - containerPort: 8786
-          name: tcp-comm
-          protocol: TCP
-        - containerPort: 8787
-          name: http-dashboard
-          protocol: TCP
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: http-dashboard
-          initialDelaySeconds: 0
-          periodSeconds: 1
-          timeoutSeconds: 300
+        #ports:
+        #- containerPort: 8300
+        #  name: tcp-comm
+        #  protocol: TCP
         resources:
           limits:
             cpu: "1"
@@ -96,13 +82,15 @@ spec:
         - --dashboard
         - --dashboard-address
         - "8788"
-        env: []
+        - --nthreads
+        - "1"
+        - --memory-limit
+        - "2GB"
+        env:
+        - name: DASK_SCHEDULER_ADDRESS
+          value: "tcp://localhost:8912"
         image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-6
         name: worker
-        ports:
-        - containerPort: 8788
-          name: http-dashboard
-          protocol: TCP
         resources:
           limits:
             cpu: "1"
@@ -125,4 +113,3 @@ spec:
         operator: Exists
       - key: virtual-kubelet.io/provider
         operator: Exists
-
