@@ -14,8 +14,7 @@ while(True):
 
     random_suffix = generate_random_suffix()
     manifest["metadata"]["name"] =  "dask-" + os.environ.get("USERNAME") + "-" + random_suffix
-    manifest["spec"]["scheduler"]["service"]["selector"]["dask.org/cluster-name"] = "dask-" + os.environ.get("USERNAME") + "-" + random_suffix
-    manifest["spec"]["scheduler"]["service"]["selector"]["dask.org/cluster-name"] = "dask-" + os.environ.get("USERNAME") + "-" + random_suffix
+    #manifest["spec"]["scheduler"]["service"]["selector"]["dask.org/cluster-name"] = "dask-" + os.environ.get("USERNAME") + "-" + random_suffix
 
     random_scheduler_port = int(random.uniform(8000, 9998))
     random_dashboard_port = random_scheduler_port + 1 
