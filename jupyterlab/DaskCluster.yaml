@@ -12,25 +12,12 @@ spec:
         port: 8912
         protocol: TCP
         targetPort: 8912
-    #    targetPort: tcp-comm
       - name: http-dashboard
         port: 8913
         protocol: TCP
         targetPort: 8913
       selector:
          app.kubernetes.io/name: ssh-fwd
-    #    dask.org/cluster-name: 
-    #    dask.org/component: scheduler
-    #  type: ClusterIP
-      #ports:
-      #- name: tcp-comm
-      #  port: 8786
-      #  nodePort: 31022
-      #  protocol: TCP
-      #  targetPort: 8786
-      #selector:
-      #  app.kubernetes.io/name: ssh-fwd
-      #type: NodePort
     spec:
       containers:
       - args:
@@ -44,10 +31,6 @@ spec:
           value: "YOUR TOKEN"
         image: ghcr.io/ttedeschi/jlab:wp5-alma9-test-vk-6
         name: scheduler
-        #ports:
-        #- containerPort: 8300
-        #  name: tcp-comm
-        #  protocol: TCP
         resources:
           limits:
             cpu: "1"
