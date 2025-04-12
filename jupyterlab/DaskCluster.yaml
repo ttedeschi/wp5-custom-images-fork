@@ -59,13 +59,9 @@ spec:
     spec:
       containers:
       - args:
-        - dask-worker
-        - --name
-        - $(DASK_WORKER_NAME)
-        - --nthreads
-        - "1"
-        - --memory-limit
-        - "2GB"
+        - bash
+        - -c
+        - "'dask-worker --name $DASK_WORKER_NAME --nthreads 1 --memory-limit 2GB'"
         env:
         - name: DASK_SCHEDULER_ADDRESS
           value: "tcp://localhost:8912"
