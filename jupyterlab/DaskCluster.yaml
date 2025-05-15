@@ -83,7 +83,7 @@ spec:
           path: /cvmfs-af-htcondor
           type: Directory
       nodeSelector:
-        kubernetes.io/hostname: vk-test
+        kubernetes.io/hostname: vk-na
       tolerations:
       - key: virtual-node.interlink/no-schedule
         operator: Exists
