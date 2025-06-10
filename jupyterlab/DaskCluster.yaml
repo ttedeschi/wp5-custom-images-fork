@@ -16,6 +16,10 @@ spec:
         port: 8913
         protocol: TCP
         targetPort: 8913
+      - name: http-privateip
+        port: 8914
+        protocol: TCP
+        targetPort: 8914
       selector:
          app.kubernetes.io/name: ssh-fwd
     spec:
