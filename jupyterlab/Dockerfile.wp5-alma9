@@ -41,6 +41,7 @@ RUN conda install -c conda-forge -y python=3.11.8 \
 COPY labextension.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/labextension.yaml
 COPY DaskCluster.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/DaskCluster_template.yaml
 COPY refresh-manifest.py /opt/conda/lib/python3.11/site-packages/dask_labextension/refresh-manifest.py
+COPY update_daskworkergroups.py /opt/conda/lib/python3.11/site-packages/dask_labextension/update_daskworkergroups.py
 
 RUN sleep 0.1
 ENV TINI_VERSION v0.19.0
