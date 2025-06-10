@@ -18,11 +18,12 @@ while(True):
 
     random_scheduler_port = int(random.uniform(8000, 9998))
     random_dashboard_port = random_scheduler_port + 1 
+    random_privateip_port = random_scheduler_port + 2 
     manifest["spec"]["scheduler"]["service"]["ports"][0]['port'] = random_scheduler_port
     manifest["spec"]["scheduler"]["service"]["ports"][0]['targetPort'] = random_scheduler_port
     manifest["spec"]["scheduler"]["service"]["ports"][1]['port'] = random_dashboard_port
     manifest["spec"]["scheduler"]["service"]["ports"][1]['targetPort'] = random_dashboard_port
-    manifest["spec"]["scheduler"]["spec"]["containers"][0]['args'][2] = manifest["spec"]["scheduler"]["spec"]["containers"][0]['args'][2].replace("8912", str(random_scheduler_port)).replace("8913", str(random_dashboard_port))
+    manifest["spec"]["scheduler"]["spec"]["containers"][0]['args'][2] = manifest["spec"]["scheduler"]["spec"]["containers"][0]['args'][2].replace("8912", str(random_scheduler_port)).replace("8913", str(random_dashboard_port)).replace("8914", str(random_privateip_port))
     manifest["spec"]["worker"]["spec"]["containers"][0]['env'][0]["value"] = manifest["spec"]["worker"]["spec"]["containers"][0]['env'][0]["value"].replace("8912", str(random_scheduler_port))
 
     manifest["spec"]["scheduler"]["spec"]["containers"][0]["image"] = "ghcr.io/ttedeschi/jlab:wp5-alma9-" + os.environ.get("IMAGE_TAG") 
