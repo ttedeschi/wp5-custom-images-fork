@@ -87,7 +87,7 @@ RUN mkdir -p /.init \
 
 #RUN yum install -y condor
 
-RUN pip install setuptools==59.5.0 asyncssh
+RUN pip install asyncssh
 #RUN conda install conda-forge::libsqlite --force-reinstall
 #RUN pip install --upgrade pysqlite
 
