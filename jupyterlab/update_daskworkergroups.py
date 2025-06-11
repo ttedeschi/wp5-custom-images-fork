@@ -1,5 +1,6 @@
 from kubernetes import client, config
 import requests
+import time
 
 config.load_incluster_config()
 
@@ -42,4 +43,4 @@ while True:
             )
         except:
             pass
-        sleep(1)
+        time.sleep(1)
