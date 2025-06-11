@@ -8,14 +8,13 @@ custom_api = client.CustomObjectsApi()
 
 namespace = "jhub"
 
-worker_groups = custom_api.list_namespaced_custom_object(
+while True:
+    worker_groups = custom_api.list_namespaced_custom_object(
     group="kubernetes.dask.org",
     version="v1",
     namespace=namespace,
     plural="daskworkergroups"
-)
-
-while True:
+    )
     for item in worker_groups["items"]:
         try:
             name_complete = item["metadata"]["name"]
