@@ -29,7 +29,7 @@ while True:
             
                 port = int(container["env"][0]["value"].split(":")[-1]) + 2
                 ip_url = "http://" + name + "-scheduler.jhub:" + str(port) + "/ip"
-                response = requests.get(ip_url)
+                response = requests.get(ip_url, timeout=5)
                 data = response.json()     
                 ip = data["private_ip"].strip()
             
@@ -48,4 +48,4 @@ while True:
             except:
                 pass
                 
-        time.sleep(1)
+    time.sleep(1)
