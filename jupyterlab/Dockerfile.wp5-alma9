@@ -20,7 +20,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 # Put conda in path so we can use conda activate
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-#RUN conda install conda-forge::conda-libmamba-solver conda-forge::libmamba conda-forge::libmambapy conda-forge::libarchive
+RUN conda install conda-forge::conda-libmamba-solver conda-forge::libmamba conda-forge::libmambapy conda-forge::libarchive
 RUN conda install -c conda-forge -y python=3.11.8 \
                                     jupyterlab==4.0.9 \
                                     nodejs==20.9.0 \
@@ -39,8 +39,9 @@ RUN conda install -c conda-forge -y python=3.11.8 \
 #RUN conda install -c conda-forge root
 
 COPY labextension.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/labextension.yaml
-COPY DaskCluster.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/DaskCluster.yaml
+COPY DaskCluster.yaml /opt/conda/lib/python3.11/site-packages/dask_labextension/DaskCluster_template.yaml
 COPY refresh-manifest.py /opt/conda/lib/python3.11/site-packages/dask_labextension/refresh-manifest.py
+COPY update_daskworkergroups.py /opt/conda/lib/python3.11/site-packages/dask_labextension/update_daskworkergroups.py
 
 RUN sleep 0.1
 ENV TINI_VERSION v0.19.0
@@ -49,6 +50,7 @@ RUN chmod +x /bin/tini
 
 RUN mkdir -p /root/.ipython
 
+COPY ./start_tunnel.py /usr/local/bin/start_tunnel.py
 COPY ./jupyterhub-singleuser-alma9.sh /usr/local/bin/jupyterhub-singleuser.sh
 COPY ./jupyterhub-singleuser-alma9 /usr/local/bin/jupyterhub-singleuser
 COPY ./spawn.sh /root/.init/spawn.sh
@@ -79,18 +81,21 @@ RUN mkdir -p /.init \
 #    echo '{"@jupyterlab/apputils-extension:themes": {"theme":"Tailwind Light"}}'> ~/.jupyter/lab/settings/overrides.json
 
 #RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/9.0/htcondor-release-current.el9.noarch.rpm
-RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/10.x/htcondor-release-current.el9.noarch.rpm
+#RUN yum install -y https://research.cs.wisc.edu/htcondor/repo/10.x/htcondor-release-current.el9.noarch.rpm
 
-RUN sed -i 's/current/8.9/g' /etc/yum.repos.d/htcondor.repo
+#RUN sed -i 's/current/8.9/g' /etc/yum.repos.d/htcondor.repo
 
-RUN yum install -y condor
+#RUN yum install -y condor
 
-RUN pip install setuptools==59.5.0
+RUN pip install asyncssh
+RUN conda install conda-forge::libsqlite --force-reinstall
 #RUN pip install --upgrade pysqlite
 
 #RUN jupyter lab build
 
 RUN sed -i 's/kwargs.pop("host_allowlist", \["localhost", "127.0.0.1"\])/lambda app, host: True/' /opt/conda/lib/python3.11/site-packages/jupyter_server_proxy/handlers.py
+
+RUN yum install -y vim
 
 WORKDIR /opt/workspace
 
