@@ -51,7 +51,7 @@ spec:
           path: /cvmfs
           type: Directory
       nodeSelector:
-        kubernetes.io/hostname: vk-na
+        kubernetes.io/hostname: vk-kbfi
       tolerations:
       - key: virtual-node.interlink/no-schedule
         operator: Exists
@@ -87,7 +87,7 @@ spec:
           path: /cvmfs
           type: Directory
       nodeSelector:
-        kubernetes.io/hostname: vk-na
+        kubernetes.io/hostname: vk-kbfi
       tolerations:
       - key: virtual-node.interlink/no-schedule
         operator: Exists
