@@ -91,6 +91,8 @@ RUN mkdir -p /.init \
 #RUN yum install -y condor
 
 RUN pip install asyncssh rucio
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
 RUN conda install conda-forge::libsqlite --force-reinstall
 #RUN pip install --upgrade pysqlite
 
