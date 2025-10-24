@@ -87,7 +87,7 @@ RUN mkdir -p /.init \
 
 #RUN yum install -y condor
 
-RUN pip install asyncssh
+RUN pip install asyncssh rucio
 RUN conda install conda-forge::libsqlite --force-reinstall
 #RUN pip install --upgrade pysqlite
 
@@ -95,7 +95,7 @@ RUN conda install conda-forge::libsqlite --force-reinstall
 
 RUN sed -i 's/kwargs.pop("host_allowlist", \["localhost", "127.0.0.1"\])/lambda app, host: True/' /opt/conda/lib/python3.11/site-packages/jupyter_server_proxy/handlers.py
 
-RUN yum install -y vim
+RUN yum install -y vim boost-devel
 
 WORKDIR /opt/workspace
 
