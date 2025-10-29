@@ -30,8 +30,8 @@ while(True):
 
     #manifest["spec"]["scheduler"]["spec"]["containers"][0]["image"] = "ghcr.io/icsc-spoke2-repo/jlab:wp5-alma9-" + os.environ.get("IMAGE_TAG") 
     #manifest["spec"]["worker"]["spec"]["containers"][0]["image"] = "ghcr.io/icsc-spoke2-repo/jlab:wp5-alma9-" + os.environ.get("IMAGE_TAG") 
-    manifest["spec"]["scheduler"]["spec"]["containers"][0]["image"] = "/cvmfs/unpacked.infn.it/harbor.cloud.infn.it/unpacked/jlab:wp5-alma9-highrate-offload-v0.0.1" 
-    manifest["spec"]["worker"]["spec"]["containers"][0]["image"] = "/cvmfs/unpacked.infn.it/harbor.cloud.infn.it/unpacked/jlab:wp5-alma9-highrate-offload-v0.0.1" 
+    manifest["spec"]["scheduler"]["spec"]["containers"][0]["image"] = "ghcr.io/ttedeschi/jlab:wp5-alma9-offload-ttedeschi-v4" 
+    manifest["spec"]["worker"]["spec"]["containers"][0]["image"] = "ghcr.io/ttedeschi/jlab:wp5-alma9-offload-ttedeschi-v4" 
     manifest["spec"]["scheduler"]["spec"]['containers'][0]["env"][0]['value'] = os.getenv("JUPYTERHUB_USER")
     manifest["spec"]["scheduler"]["spec"]['containers'][0]["env"][1]['value'] = os.getenv("JUPYTERHUB_API_TOKEN")
 
