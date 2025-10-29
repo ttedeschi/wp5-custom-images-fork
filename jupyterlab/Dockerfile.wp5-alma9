@@ -102,6 +102,13 @@ RUN sed -i 's/kwargs.pop("host_allowlist", \["localhost", "127.0.0.1"\])/lambda 
 
 RUN yum install -y vim boost-devel
 
+RUN git clone https://gitlab.cern.ch/cp3-cms/CMSJMECalculators.git -b 0.2.0
+RUN sed -i 's/std::uint32_t/uint32_t/g' CMSJMECalculators/interface/JMESystematicsCalculators.h
+RUN sed -i 's/find_package(Python)/find_package(Python 3.11 REQUIRED COMPONENTS Interpreter Development)/g' CMSJMECalculators/CMakeLists.txt
+RUN cmake -DCMAKE_CXX_FLAGS="-std=c++11 -include cstdint"  -DPython3_EXECUTABLE=/opt/conda/bin/python3 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/conda CMSJMECalculators
+RUN make
+RUN make install
+
 WORKDIR /opt/workspace
 
 ARG NOTEBOOK_VERSION
