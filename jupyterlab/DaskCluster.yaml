@@ -65,7 +65,7 @@ spec:
       - args:
         - bash
         - -c
-        - "'dask-worker --name $DASK_WORKER_NAME --nthreads 1 --memory-limit 2GB'"
+        - "'source /opt/conda/etc/profile.d/conda.sh && conda activate base && dask-worker --name $DASK_WORKER_NAME --nthreads 1 --memory-limit 2GB'"
         env:
         - name: DASK_SCHEDULER_ADDRESS
           value: "tcp://localhost:8912"
